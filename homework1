@@ -1,0 +1,106 @@
+class User:
+    def __init__(self, name, lastname, age):
+        self.name = name
+        self.lastname = lastname
+        self.age = age
+        self.tasks = []              
+        self.action_info = ""        
+
+    def assign_task(self, task):
+        if task not in self.tasks:
+            self.tasks.append(task)
+            self.action_info = f"You have been assigned to the '{task}' task."
+            print(f"{self.name}, you have been assigned to the '{task}' task.")
+        else:
+            self.action_info = f"The '{task}' task has already been assigned."
+            print(f"{self.name}, the '{task}' task has already been assigned.")
+
+    def unassign_task(self, task):
+        if task in self.tasks:
+            self.tasks.remove(task)
+            self.action_info = f"You have been unassigned from the '{task}' task."
+            print(f"{self.name}, you have been unassigned from the '{task}' task.")
+        else:
+            self.action_info = f"The '{task}' task has not been found."
+            print(f"{self.name}, the '{task}' task has not been found.")
+
+    def list_tasks(self):
+        return self.tasks
+    
+    def __str__(self):
+        base_info = f"You are {self.name} {self.lastname} {self.age} years old."
+        return f"{base_info} {self.action_info}"
+
+user_instance = User("Deme", "Gochelashvili", 15)
+
+user_instance.assign_task("clean your room")
+print(user_instance)
+
+user_instance.unassign_task("clean your room")
+print(user_instance)
+
+
+class Task:
+    def __init__(self, name):
+        self.name = name
+        self.status = "Not started" 
+
+    def mark_status(self, status):
+        self.status = status
+        print(f"Task '{self.name}' status updated to: {self.status}")
+
+    def __str__(self):
+        return f"Task: {self.name}, Status: {self.status}"
+
+task = Task("Clean your room")
+print(task)  
+
+task.mark_status("In progress")
+print(task)  
+
+class Project:
+    def __init__(self, name):
+        self.name = name
+        self.users = []
+        self.tasks = []
+
+    def add_user(self, user):
+        if user not in self.users:
+            self.users.append(user)
+            print(f"Added user {user.name} to project '{self.name}'.")
+
+    def add_task(self, task):
+        if task not in self.tasks:
+            self.tasks.append(task)
+            print(f"Added task '{task.name}' to project '{self.name}'.")
+
+    def list_users(self):
+        return [user.name for user in self.users]
+
+    def list_tasks(self):
+        return [task.name for task in self.tasks]
+
+    def __str__(self):
+        user_count = 0
+        for _ in self.users:
+            user_count += 1
+        task_count = 0
+        for _ in self.tasks:
+            task_count += 1
+
+        return f"Project '{self.name}' with {user_count} users and {task_count} tasks."
+
+project = Project("Home Cleaning")
+
+user1 = User("Deme", "Gochelashvili", 15)
+task1 = Task("Clean your room")
+
+project.add_user(user1)
+project.add_task(task1)
+
+
+print(project)  
+
+print(project.list_users())  
+
+print(project.list_tasks())  
